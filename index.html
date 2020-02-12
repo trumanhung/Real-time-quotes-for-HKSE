@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>即時港股串流報價</title>
+<link rel='stylesheet' href='style.css'>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='script.js'></script>
+</head>
+<body onload="start();">
+<div class="button">
+<input id="symbol1" onkeypress="return checkEnter(event);" value="2823" type="text" />
+<input id="symbol2" onkeypress="return checkEnter(event);" value="941" type="text" />
+<input id="symbol3" onkeypress="return checkEnter(event);" value="2822" type="text" />
+<input id="symbol4" onkeypress="return checkEnter(event);" value="700" type="text" />
+<input id="symbol5" onkeypress="return checkEnter(event);" value="2800" type="text" />
+<input id="symbol6" onkeypress="return checkEnter(event);" value="5" type="text" />
+<input id="symbol7" onkeypress="return checkEnter(event);" value="2318" type="text" />
+<input id="symbol8" onkeypress="return checkEnter(event);" value="494" type="text" />
+<input id="symbol9" onkeypress="return checkEnter(event);" value="388" type="text" />
+<input id="symbol10" onkeypress="return checkEnter(event);" value="1299" type="text" />
+
+<div id="btnQuote" onclick="return Reload();">清除</div>
+<div id="flip" onclick="return Help();">幫助</div>
+<div id="panel">程序預設已經輸入了10隻股票並開始即時串流報價中<br>只需在輸入欄中順次序重新輸入心頭好的股票，程序就會自動轉換串流報價其他股票<br>按清除就可以回到預設的10隻股票<br>*更新時間只作為參考，它會隨著第一隻股價變動而改變</div>
+<span id="0">更新時間: n/a</span>
+</div>
+
+
+<table class="tb">
+  <tr>
+    <th colspan="2" style ="background-color:#26ADE4;color:white;">n/a</th>
+  </tr>
+  <tr>
+    <th>最高/最低價</th>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>開市/前收市價</th>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>現價（港元）</td>
+    <td id="backgroundColor">n/a</td>
+  </tr>
+  <tr>
+    <th>升跌 (%)</td>
+    <td id="color">n/a</td>
+  </tr>
+  <tr>
+    <th>成交量</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>成交金額</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>每手股數</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>差價</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>52周最高 / 低</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>市盈率/每股盈利</td>
+    <td>n/a</td>
+  </tr>
+  <tr>
+    <th>週息率</td>
+    <td>n/a</td>
+  </tr>
+</table>
+<table class="tb1">
+  <tr>
+    <th class="tb1-th">代號</th>
+    <th class="tb1-th">現價</th>
+    <th class="tb1-th">升跌 ($)</th>
+    <th class="tb1-th">升跌 (%)</th>
+    <th class="tb1-th">買價</th>
+    <th class="tb1-th">賣價</th>
+    <th class="tb1-th">成交量</th>
+    <th class="tb1-th">成交金額</th>
+    <th class="tb1-th">開市價</th>
+    <th class="tb1-th">最低價</th>
+    <th class="tb1-th">最高價</th>
+  </tr>
+  <tr>
+    <td id="01.1" class="tb1-dark" ></td>
+    <td id="01.2" class="tb1-dark"></td>
+    <td id="01.3" class="tb1-dark"></td>
+    <td id="01.4" class="tb1-dark"></td>
+    <td id="01.5" class="tb1-dark"></td>
+    <td id="01.6" class="tb1-dark"></td>
+    <td id="01.7" class="tb1-dark"></td>
+    <td id="01.8" class="tb1-dark"></td>
+    <td id="01.9" class="tb1-dark"></td>
+    <td id="01.10" class="tb1-dark"></td>
+    <td id="01.11" class="tb1-dark"></td>
+  </tr>
+  <tr>
+    <td id="02.1"></td>
+    <td id="02.2"></td>
+    <td id="02.3"></td>
+    <td id="02.4"></td>
+    <td id="02.5"></td>
+    <td id="02.6"></td>
+    <td id="02.7"></td>
+    <td id="02.8"></td>
+    <td id="02.9"></td>
+    <td id="02.10"></td>
+    <td id="02.11"></td>
+  </tr>
+  <tr>
+    <td id="03.1" class="tb1-dark"></td>
+    <td id="03.2" class="tb1-dark"></td>
+    <td id="03.3" class="tb1-dark"></td>
+    <td id="03.4" class="tb1-dark"></td>
+    <td id="03.5" class="tb1-dark"></td>
+    <td id="03.6" class="tb1-dark"></td>
+    <td id="03.7" class="tb1-dark"></td>
+    <td id="03.8" class="tb1-dark"></td>
+    <td id="03.9" class="tb1-dark"></td>
+    <td id="03.10" class="tb1-dark"></td>
+    <td id="03.11" class="tb1-dark"></td>
+  </tr>
+  <tr>
+    <td id="04.1"></td>
+    <td id="04.2"></td>
+    <td id="04.3"></td>
+    <td id="04.4"></td>
+    <td id="04.5"></td>
+    <td id="04.6"></td>
+    <td id="04.7"></td>
+    <td id="04.8"></td>
+    <td id="04.9"></td>
+    <td id="04.10"></td>
+    <td id="04.11"></td>
+  </tr>
+  <tr>
+    <td id="05.1" class="tb1-dark"></td>
+    <td id="05.2" class="tb1-dark"></td>
+    <td id="05.3" class="tb1-dark"></td>
+    <td id="05.4" class="tb1-dark"></td>
+    <td id="05.5" class="tb1-dark"></td>
+    <td id="05.6" class="tb1-dark"></td>
+    <td id="05.7" class="tb1-dark"></td>
+    <td id="05.8" class="tb1-dark"></td>
+    <td id="05.9" class="tb1-dark"></td>
+    <td id="05.10" class="tb1-dark"></td>
+    <td id="05.11" class="tb1-dark"></td>
+  </tr>
+  <tr>
+    <td id="06.1"></td>
+    <td id="06.2"></td>
+    <td id="06.3"></td>
+    <td id="06.4"></td>
+    <td id="06.5"></td>
+    <td id="06.6"></td>
+    <td id="06.7"></td>
+    <td id="06.8"></td>
+    <td id="06.9"></td>
+    <td id="06.10"></td>
+    <td id="06.11"></td>
+  </tr>
+  <tr>
+    <td id="07.1" class="tb1-dark"></td>
+    <td id="07.2" class="tb1-dark"></td>
+    <td id="07.3" class="tb1-dark"></td>
+    <td id="07.4" class="tb1-dark"></td>
+    <td id="07.5" class="tb1-dark"></td>
+    <td id="07.6" class="tb1-dark"></td>
+    <td id="07.7" class="tb1-dark"></td>
+    <td id="07.8" class="tb1-dark"></td>
+    <td id="07.9" class="tb1-dark"></td>
+    <td id="07.10" class="tb1-dark"></td>
+    <td id="07.11" class="tb1-dark"></td>
+  </tr>
+  <tr>
+    <td id="08.1"></td>
+    <td id="08.2"></td>
+    <td id="08.3"></td>
+    <td id="08.4"></td>
+    <td id="08.5"></td>
+    <td id="08.6"></td>
+    <td id="08.7"></td>
+    <td id="08.8"></td>
+    <td id="08.9"></td>
+    <td id="08.10"></td>
+    <td id="08.11"></td>
+  </tr>
+  <tr>
+    <td id="09.1" class="tb1-dark"></td>
+    <td id="09.2" class="tb1-dark"></td>
+    <td id="09.3" class="tb1-dark"></td>
+    <td id="09.4" class="tb1-dark"></td>
+    <td id="09.5" class="tb1-dark"></td>
+    <td id="09.6" class="tb1-dark"></td>
+    <td id="09.7" class="tb1-dark"></td>
+    <td id="09.8" class="tb1-dark"></td>
+    <td id="09.9" class="tb1-dark"></td>
+    <td id="09.10" class="tb1-dark"></td>
+    <td id="09.11" class="tb1-dark"></td>
+  </tr>
+    <td id="10.1"></td>
+    <td id="10.2"></td>
+    <td id="10.3"></td>
+    <td id="10.4"></td>
+    <td id="10.5"></td>
+    <td id="10.6"></td>
+    <td id="10.7"></td>
+    <td id="10.8"></td>
+    <td id="10.9"></td>
+    <td id="10.10"></td>
+    <td id="10.11"></td>
+  </tr>
+</table>
+</body>
